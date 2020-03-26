@@ -1,15 +1,27 @@
 const fs = require('fs');
+const chalk = require('chalk');
 
-const getNotes = () => {
+const yellowMessage = chalk.yellow.bold;
+const greenMessage = chalk.bgGreen.bold;
 
+const printAllNotes = () => {
+    const notes = loadNotes();
+
+    console.log(greenMessage('\nYour notes: '));
+    notes.forEach((note) => {
+        console.log('--------------------------------------------------');
+        console.log(`${yellowMessage('Title: ')} ${note.title}`);
+        console.log(`${yellowMessage('Text: ')} ${note.body}`);
+    });
+    console.log('--------------------------------------------------');
 };
 
 const addNote = (title, body) => {
     const notes = loadNotes();
 
-    const duplicateNotes = notes.filter((note) => note.title === title);
+    const duplicateNote = notes.find((note) => note.title === title);
 
-    if (!duplicateNotes.length) {
+    if (!duplicateNote) {
         notes.push({
             title,
             body
@@ -53,6 +65,6 @@ const loadNotes = () => {
 
 module.exports = {
     addNote,
-    getNotes,
+    printAllNotes,
     removeNote,
 };

@@ -5,9 +5,10 @@ const notes = require('./notes.js');
 
 // Yargs version
 yargs.version('1.0.0');
+
 // Colour messages
-const greenMessage = chalk.green.bold;
-const redMessage = chalk.red.bold;
+const greenMessage = chalk.bgGreen.bold;
+const redMessage = chalk.bgRed.bold;
 
 // Create add command
 yargs.command({
@@ -60,7 +61,7 @@ yargs.command({
     command: 'list',
     describe: 'Printing all notes',
     handler: () => {
-        console.log('Printing all notes...');
+        notes.printAllNotes();
     }
 });
 
