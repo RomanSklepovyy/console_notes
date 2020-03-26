@@ -14,6 +14,20 @@ const addNote = (title, body) => {
     saveNotes(notes);
 };
 
+const removeNote = (title) => {
+    const notes = loadNotes();
+
+    const noteIndex = notes.findIndex((note) => note.title === title);
+
+    if (noteIndex !== -1) {
+        notes.splice(noteIndex, 1);
+        saveNotes(notes);
+        return true;
+    }
+
+    return false;
+};
+
 const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes);
     fs.writeFileSync('notes.json', dataJSON);
@@ -29,6 +43,7 @@ const loadNotes = () => {
 };
 
 module.exports = {
-    addNote: addNote,
-    getNotes: getNotes
+    addNote,
+    getNotes,
+    removeNote,
 };

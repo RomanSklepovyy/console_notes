@@ -5,6 +5,9 @@ const notes = require('./notes.js');
 
 // Yargs version
 yargs.version('1.0.0');
+// Colour messages
+const greenMessage = chalk.green.bold;
+const redMessage = chalk.red.bold;
 
 // Create add command
 yargs.command({
@@ -12,7 +15,7 @@ yargs.command({
    describe: 'Add a new note',
    builder: {
        title: {
-           describe: 'Note title',
+           describe: 'New note title',
            demandOption: true,
            type: 'string'
        },
@@ -24,6 +27,7 @@ yargs.command({
    },
    handler: (argv) => {
        notes.addNote(argv.title, argv.body);
+       console.log(greenMessage('Note successfully added!'));
    }
 });
 
@@ -31,8 +35,19 @@ yargs.command({
 yargs.command({
     command: 'remove',
     describe: 'Remove a note',
-    handler: () => {
-        console.log('Removing the note...');
+    builder: {
+        title: {
+            describe: 'Removing note title',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: (argv) => {
+        if (notes.removeNote(argv.title)) {
+            console.log(greenMessage('Note successfully deleted!'));
+        } else {
+            console.log(redMessage('Note not found!'));
+        }
     }
 });
 
