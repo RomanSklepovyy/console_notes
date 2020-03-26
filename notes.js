@@ -3,6 +3,7 @@ const chalk = require('chalk');
 
 const yellowMessage = chalk.yellow.bold;
 const greenMessage = chalk.bgGreen.bold;
+const redMessage = chalk.bgRed.bold;
 
 const printAllNotes = () => {
     const notes = loadNotes();
@@ -10,8 +11,7 @@ const printAllNotes = () => {
     console.log(greenMessage('\nYour notes: '));
     notes.forEach((note) => {
         console.log('--------------------------------------------------');
-        console.log(`${yellowMessage('Title: ')} ${note.title}`);
-        console.log(`${yellowMessage('Text: ')} ${note.body}`);
+        printNote(note);
     });
     console.log('--------------------------------------------------');
 };
@@ -26,8 +26,11 @@ const addNote = (title, body) => {
             title,
             body
         });
+
         saveNotes(notes);
+
         return true;
+
     } else {
         return false;
     }
@@ -63,8 +66,28 @@ const loadNotes = () => {
     }
 };
 
+const readNote = (title) => {
+    const notes = loadNotes();
+
+    const note = notes.find((note) => note.title === title);
+
+    if (note) {
+        console.log('--------------------------------------------------');
+        printNote(note);
+        console.log('--------------------------------------------------');
+    } else {
+        console.log(redMessage('Note not found!'));
+    }
+};
+
 module.exports = {
     addNote,
     printAllNotes,
     removeNote,
+    readNote
+};
+
+const printNote = (note) => {
+    console.log(`${yellowMessage('Title: ')} ${note.title}`);
+    console.log(`${yellowMessage('Text: ')} ${note.body}`);
 };
