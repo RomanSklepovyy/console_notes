@@ -26,8 +26,12 @@ yargs.command({
        }
    },
    handler: (argv) => {
-       notes.addNote(argv.title, argv.body);
-       console.log(greenMessage('Note successfully added!'));
+       if (notes.addNote(argv.title, argv.body)) {
+           console.log(greenMessage('Note successfully added!'));
+       } else {
+           console.log(redMessage('Note already exists!'))
+       }
+
    }
 });
 

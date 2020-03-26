@@ -10,16 +10,14 @@ const addNote = (title, body) => {
     const duplicateNotes = notes.filter((note) => note.title === title);
 
     if (!duplicateNotes.length) {
-
         notes.push({
             title,
             body
         });
-
         saveNotes(notes);
-
+        return true;
     } else {
-        console.log('Note title taken!');
+        return false;
     }
 
 
